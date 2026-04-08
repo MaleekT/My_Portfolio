@@ -8,8 +8,6 @@ export const projects: Project[] = [
     description:
       "A faith-inspired textile retail experience with WhatsApp-integrated sales flow, mobile-first design, and a warm devotional brand aesthetic.",
     thumbnailUrl: "/images/projects/textile-hero.jpg",
-    tabletImageUrl: "/images/projects/textile-tablet.jpg",
-    mobileImageUrl: "/images/projects/textile-mobile.jpg",
     fullImageUrl: "/images/projects/textile-hero.jpg",
     liveUrl: "https://gods-time-is-the-best-textile-stores.webflow.io",
     caseStudy: {
@@ -36,8 +34,6 @@ export const projects: Project[] = [
     description:
       "A refined digital presence for a boutique interior design studio with CMS-driven team profiles and curated project galleries.",
     thumbnailUrl: "/images/projects/hayes-hero.jpg",
-    tabletImageUrl: "/images/projects/hayes-tablet.jpg",
-    mobileImageUrl: "/images/projects/hayes-mobile.jpg",
     fullImageUrl: "/images/projects/hayes-hero.jpg",
     liveUrl: "https://hayessvalleyinteriordesign.webflow.io",
     caseStudy: {
@@ -64,8 +60,6 @@ export const projects: Project[] = [
     description:
       "A high-performance cloud architecture agency site with dark UI, live system metrics, and multi-phase process visualization.",
     thumbnailUrl: "/images/projects/vantage-hero.jpg",
-    tabletImageUrl: "/images/projects/vantage-tablet.jpg",
-    mobileImageUrl: "/images/projects/vantage-mobile.jpg",
     fullImageUrl: "/images/projects/vantage-hero.jpg",
     liveUrl: "https://vantage-point-665ec9.webflow.io",
     caseStudy: {
@@ -92,8 +86,6 @@ export const projects: Project[] = [
     description:
       "A playful yet polished fintech brand site balancing organic energy with clean, conversion-focused design and smooth interactions.",
     thumbnailUrl: "/images/projects/melons-hero.jpg",
-    tabletImageUrl: "/images/projects/melons-tablet.jpg",
-    mobileImageUrl: "/images/projects/melons-mobile.jpg",
     fullImageUrl: "/images/projects/melons-hero.jpg",
     liveUrl: "https://melons-site.webflow.io",
     caseStudy: {

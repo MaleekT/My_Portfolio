@@ -4,8 +4,6 @@ export interface Project {
   category: string;
   description: string;
   thumbnailUrl: string;
-  tabletImageUrl: string;
-  mobileImageUrl: string;
   fullImageUrl: string;
   liveUrl: string;
   comingSoon?: boolean;

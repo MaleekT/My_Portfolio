@@ -66,23 +66,10 @@ export default function CaseStudyExpanded({
         transition={{ duration: 0.6, ease }}
         className="mb-12 aspect-video w-full overflow-hidden border border-border bg-bg-secondary"
       >
-        {/* Desktop */}
         <img
           src={project.fullImageUrl}
-          alt={`${project.title} — Desktop Preview`}
-          className="hidden h-full w-full object-cover lg:block"
-        />
-        {/* Tablet */}
-        <img
-          src={project.tabletImageUrl}
-          alt={`${project.title} — Tablet Preview`}
-          className="hidden h-full w-full object-cover md:block lg:hidden"
-        />
-        {/* Mobile */}
-        <img
-          src={project.mobileImageUrl}
-          alt={`${project.title} — Mobile Preview`}
-          className="block h-full w-full object-cover md:hidden"
+          alt={`${project.title} — Full Preview`}
+          className="h-full w-full object-cover"
         />
       </motion.div>
 
