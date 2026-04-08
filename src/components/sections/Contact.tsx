@@ -152,9 +152,9 @@ export default function Contact() {
           >
             <div>
               <p className="mb-10 max-w-md font-body text-[16px] leading-[1.7] text-text-muted">
-                I&apos;m currently available for freelance projects and full-time
-                opportunities. Whether you need a complete website, a redesign,
-                or a Webflow build — I&apos;d love to hear about it.
+                I am open to freelance projects and full-time roles. I would
+                love to hear from you if you are looking for a complete
+                website, a fresh redesign, or a technical Webflow build.
               </p>
 
               <div className="flex flex-col gap-6">
