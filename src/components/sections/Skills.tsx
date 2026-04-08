@@ -102,10 +102,11 @@ export default function Skills() {
             Webflow Development
           </h3>
           <p className="max-w-2xl font-body text-[16px] leading-[1.7] text-text-secondary">
-            I don&apos;t just build in Webflow — I architect scalable,
-            CMS-driven sites using the Client-First framework, Finsweet
-            attributes, and custom code integrations. Every build is optimized
-            for performance, SEO, and client independence.
+            I focus on architecting scalable, CMS-driven sites built on the
+            Client-First framework and Finsweet attributes. My process involves
+            weaving in custom code integrations to push past standard
+            limitations, ensuring every build is fully optimized for speed,
+            clean SEO, and total client independence.
           </p>
 
           <div className="mt-10 border-t border-border">
