@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import Button from "@/components/ui/Button";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -23,16 +23,39 @@ export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Open mailto with pre-filled data as fallback
-    const subject = encodeURIComponent(`Project Inquiry from ${formData.name}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
-    );
-    window.open(`mailto:maleektaiwo164@gmail.com?subject=${subject}&body=${body}`, "_self");
-    setStatus("sent");
-    setTimeout(() => setStatus("idle"), 3000);
+    setStatus("sending");
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/maleektaiwo164@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `New Project Inquiry from ${formData.name}`,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
+
+      if (response.ok) {
+        setStatus("sent");
+        setFormData({ name: "", email: "", message: "" });
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 5000);
+      }
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 5000);
+    }
   };
 
   return (
@@ -136,10 +159,110 @@ export default function Contact() {
                   variant="primary"
                   type="submit"
                   ariaLabel="Send message"
+                  disabled={status === "sending" || status === "sent"}
                 >
-                  {status === "sent" ? "Message Sent" : status === "sending" ? "Sending..." : "Send Message"}
+                  <AnimatePresence mode="wait">
+                    {status === "sending" ? (
+                      <motion.span
+                        key="sending"
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -5 }}
+                        transition={{ duration: 0.2 }}
+                        className="flex items-center gap-3"
+                      >
+                        <motion.span
+                          animate={{ rotate: 360 }}
+                          transition={{
+                            duration: 0.8,
+                            repeat: Infinity,
+                            ease: "linear",
+                          }}
+                          className="inline-block h-4 w-4 rounded-full border-2 border-current border-t-transparent"
+                        />
+                        Sending...
+                      </motion.span>
+                    ) : status === "sent" ? (
+                      <motion.span
+                        key="sent"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.3, ease }}
+                        className="flex items-center gap-3"
+                      >
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        Message Sent
+                      </motion.span>
+                    ) : status === "error" ? (
+                      <motion.span
+                        key="error"
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -5 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        Try Again
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="idle"
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -5 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        Send Message
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </Button>
               </div>
+
+              {/* Status feedback message */}
+              <AnimatePresence>
+                {status === "sent" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.4, ease }}
+                    className="flex items-center gap-3 border border-accent/30 bg-accent-subtle px-5 py-4"
+                  >
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+                      <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent" />
+                    </span>
+                    <p className="font-mono text-[13px] uppercase tracking-[0.08em] text-accent">
+                      Message sent — I&apos;ll get back to you within 24 hours.
+                    </p>
+                  </motion.div>
+                )}
+                {status === "error" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.4, ease }}
+                    className="border border-red-500/30 bg-red-500/10 px-5 py-4"
+                  >
+                    <p className="font-mono text-[13px] uppercase tracking-[0.08em] text-red-400">
+                      Something went wrong. Please email me directly at maleektaiwo164@gmail.com
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </form>
           </motion.div>
 
