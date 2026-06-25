@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Project } from "@/types";
 import Button from "./Button";
@@ -21,6 +22,7 @@ export default function CaseStudyExpanded({
   onClose,
 }: CaseStudyExpandedProps) {
   const { caseStudy, liveUrl } = project;
+  const [imageError, setImageError] = useState(false);
 
   return (
     <motion.div
@@ -66,11 +68,23 @@ export default function CaseStudyExpanded({
         transition={{ duration: 0.6, ease }}
         className="mb-12 aspect-video w-full overflow-hidden border border-border bg-bg-secondary"
       >
-        <img
-          src={project.fullImageUrl}
-          alt={`${project.title} — Full Preview`}
-          className="h-full w-full object-cover"
-        />
+        {imageError ? (
+          <div className="flex h-full w-full flex-col items-center justify-center gap-3 px-6 text-center">
+            <span className="font-display text-[clamp(20px,3vw,32px)] leading-tight tracking-[-0.02em] text-text-secondary">
+              {project.title}
+            </span>
+            <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-text-muted">
+              Preview coming soon
+            </span>
+          </div>
+        ) : (
+          <img
+            src={project.fullImageUrl}
+            alt={`${project.title} — Full Preview`}
+            className="h-full w-full object-cover"
+            onError={() => setImageError(true)}
+          />
+        )}
       </motion.div>
 
       {/* Project overview — two columns */}

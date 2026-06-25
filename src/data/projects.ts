@@ -28,28 +28,54 @@ export const projects: Project[] = [
     },
   },
   {
-    id: "hayes-valley",
-    title: "Hayes Valley Interior Design",
-    category: "Interior Design / Lifestyle",
+    id: "split",
+    title: "Split",
+    category: "DeFi / Web3",
     description:
-      "A refined digital presence for a boutique interior design studio with CMS-driven team profiles and curated project galleries.",
-    thumbnailUrl: "/images/projects/hayes-hero.jpg",
-    fullImageUrl: "/images/projects/hayes-hero.jpg",
-    liveUrl: "https://hayessvalleyinteriordesign.webflow.io",
+      "A DeFi savings app on Arc where you set up buckets for your goals and every incoming USDC payment splits across them automatically, with no manual transfers.",
+    thumbnailUrl: "/images/projects/split-hero.png",
+    fullImageUrl: "/images/projects/split-hero.png",
+    liveUrl: "https://split-arc.vercel.app",
     caseStudy: {
       brief:
-        "The goal was to create a digital presence for a high-end interior design studio that emphasizes 'timeless elegance'. The site needed to showcase a sophisticated portfolio while making the design process approachable and collaborative for residential clients.",
-      role: "UI/UX Design, Webflow Development, CMS Architecture",
-      tools: ["Figma", "Webflow", "Webflow CMS", "Custom Forms"],
+        "The goal was to make saving feel automatic. Most people save by manually moving money around or keeping a spreadsheet. With Split, you set up buckets for things like savings, bills, or a specific goal, share one payment link, and every USDC payment that lands gets divided across those buckets the moment it arrives.",
+      role: "Product Design, Full-Stack Development, Smart Contract Integration",
+      tools: ["Figma", "Next.js", "TypeScript", "wagmi / viem", "RainbowKit", "Supabase", "Arc Testnet"],
       approach:
-        "I designed a clean, editorial-style layout using soft tones and ample whitespace to highlight the studio's aesthetic. I implemented a CMS-driven portfolio to showcase high-resolution project imagery and integrated a streamlined Team section to personalize the brand and build trust with potential clients.",
+        "I designed a dark, clean interface with a live bucket preview, so the way the split works is clear before you even connect a wallet. On the build side, I handled the wallet connection with RainbowKit and wagmi, kept bucket data in Supabase, and wired up the on-chain splitting on Arc so each payment routes to your buckets by percentage and settles in under a second.",
       results:
-        "The final site delivers a seamless, high-end user experience that reflects the studio's attention to detail. By focusing on visual storytelling and clear calls to action, I created a professional platform that effectively converts visitors into design consultations while maintaining a sub-2s load time.",
+        "The result is a savings tool that runs on its own. Money splits the moment it arrives, and there's a clean dashboard for managing your buckets, activity, and goals on both desktop and mobile.",
       metrics: [
-        "Webflow CMS Collections",
-        "Dynamic Team Profiles",
-        "Custom Form Integration",
-        "Fully Client-Managed",
+        "On-Chain USDC Auto-Splitting",
+        "Wallet-Native UX",
+        "Sub-1s Routing on Arc",
+        "Live on Arc Testnet",
+      ],
+    },
+  },
+  {
+    id: "pop",
+    title: "Pop",
+    category: "Web3 / Social Betting",
+    description:
+      "A 1v1 betting app on Arc where two friends stake USDC on a real outcome, an AI agent checks the result, and the contract pays the winner right away.",
+    thumbnailUrl: "/images/projects/pop-hero.png",
+    fullImageUrl: "/images/projects/pop-hero.png",
+    liveUrl: "https://pop-arc.vercel.app",
+    caseStudy: {
+      brief:
+        "The goal was to settle the small bets friends make and then never actually collect on. Two people pick a bet from a set of templates, both stake the same amount of USDC, and it locks. The tricky part was making it settle quickly and fairly without turning it into a prediction market, so the bet stays private between the two of you and resolves on its own.",
+      role: "Product Design, Full-Stack Development, Smart Contracts, AI Agent",
+      tools: ["Figma", "Next.js", "TypeScript", "Solidity", "wagmi / viem", "Supabase", "Arc Testnet"],
+      approach:
+        "I designed a mobile-first dark interface built around the moment a bet settles, with a live card showing the stake, the source, and a countdown. An AI agent pulls the result from one public source, posts a proposed winner on-chain, and opens a 3-hour window to challenge it. If someone disputes it, the bet falls back to both people confirming. The key detail is that the agent can only ever pay one of the two people in the bet, and that rule lives in the contract itself, not on a server you have to trust.",
+      results:
+        "The payoff is watching the loser's stake land in the winner's wallet seconds after it settles. It works for the kind of private, one-on-one bet that prediction markets were never really built for, with no liquidity needed and very little trust required.",
+      metrics: [
+        "AI-Proposed Settlement",
+        "Trust-Minimized Contract",
+        "3-Hour Challenge Window",
+        "Live on Arc Testnet",
       ],
     },
   },
@@ -76,6 +102,32 @@ export const projects: Project[] = [
         "CMS-Driven Architecture",
         "Sub-2s Load Time",
         "Mobile-First Responsive",
+      ],
+    },
+  },
+  {
+    id: "hayes-valley",
+    title: "Hayes Valley Interior Design",
+    category: "Interior Design / Lifestyle",
+    description:
+      "A refined digital presence for a boutique interior design studio with CMS-driven team profiles and curated project galleries.",
+    thumbnailUrl: "/images/projects/hayes-hero.jpg",
+    fullImageUrl: "/images/projects/hayes-hero.jpg",
+    liveUrl: "https://hayessvalleyinteriordesign.webflow.io",
+    caseStudy: {
+      brief:
+        "The goal was to create a digital presence for a high-end interior design studio that emphasizes 'timeless elegance'. The site needed to showcase a sophisticated portfolio while making the design process approachable and collaborative for residential clients.",
+      role: "UI/UX Design, Webflow Development, CMS Architecture",
+      tools: ["Figma", "Webflow", "Webflow CMS", "Custom Forms"],
+      approach:
+        "I designed a clean, editorial-style layout using soft tones and ample whitespace to highlight the studio's aesthetic. I implemented a CMS-driven portfolio to showcase high-resolution project imagery and integrated a streamlined Team section to personalize the brand and build trust with potential clients.",
+      results:
+        "The final site delivers a seamless, high-end user experience that reflects the studio's attention to detail. By focusing on visual storytelling and clear calls to action, I created a professional platform that effectively converts visitors into design consultations while maintaining a sub-2s load time.",
+      metrics: [
+        "Webflow CMS Collections",
+        "Dynamic Team Profiles",
+        "Custom Form Integration",
+        "Fully Client-Managed",
       ],
     },
   },
