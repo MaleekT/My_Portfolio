@@ -1,20 +1,27 @@
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
 @import "tailwindcss";
 
-/* ─── Design Tokens ─── */
+/* ─── Void Signal Design Tokens (dark only) ─── */
 :root,
 [data-theme="dark"] {
-  --bg-primary: #0A0A0A;
-  --bg-secondary: #111111;
-  --bg-elevated: #1A1A1A;
-  --text-primary: #F5F5F0;
-  --text-secondary: #8A8A8A;
-  --text-muted: #555555;
-  --accent: #C8F542;
-  --accent-hover: #D4F76B;
-  --accent-subtle: rgba(200, 245, 66, 0.1);
-  --border: #222222;
-  --border-hover: #333333;
+  --bg-primary: #08090a;
+  --bg-secondary: #0e1011;
+  --bg-elevated: #111315;
+  --surface-3: #14171a;
+
+  --text-primary: #f2f4ef;
+  --text-secondary: #c2c8bf;
+  --text-muted: #9aa39a;
+  --text-dim: #7a8579;
+  --placeholder: #5d6560;
+
+  --accent: #c9fa4d;
+  --accent-hover: #d4ff6b;
+  --accent-subtle: rgba(201, 250, 77, 0.1);
+  --accent-glow: rgba(201, 250, 77, 0.12);
+
+  --border: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(255, 255, 255, 0.15);
+  --border-accent: rgba(201, 250, 77, 0.4);
 
   /* Spacing scale */
   --space-xs: 4px;
@@ -27,82 +34,32 @@
   --space-section: 160px;
 }
 
-[data-theme="light"] {
-  --bg-primary: #F5F5F0;
-  --bg-secondary: #EAEAE5;
-  --bg-elevated: #FFFFFF;
-  --text-primary: #0A0A0A;
-  --text-secondary: #555555;
-  --text-muted: #8A8A8A;
-  --accent: #A8D435;
-  --accent-hover: #C8F542;
-  --accent-subtle: rgba(200, 245, 66, 0.08);
-  --border: #D5D5D0;
-  --border-hover: #C0C0B8;
-}
-
 /* ─── Tailwind Theme Inline ─── */
 @theme inline {
   --color-bg-primary: var(--bg-primary);
   --color-bg-secondary: var(--bg-secondary);
   --color-bg-elevated: var(--bg-elevated);
+  --color-surface-3: var(--surface-3);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
+  --color-text-dim: var(--text-dim);
+  --color-placeholder: var(--placeholder);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-subtle: var(--accent-subtle);
+  --color-accent-glow: var(--accent-glow);
   --color-border: var(--border);
   --color-border-hover: var(--border-hover);
+  --color-border-accent: var(--border-accent);
 
   --spacing: 0.25rem;
 
-  --font-display: "Instrument Serif", serif;
-  --font-body: "DM Sans", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --font-display: var(--font-syne), sans-serif;
+  --font-body: var(--font-space-grotesk), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
 
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* ─── Font Faces (local Clash Display & Satoshi fallbacks) ─── */
-@font-face {
-  font-family: "Clash Display";
-  src: url("/fonts/ClashDisplay-Semibold.woff2") format("woff2");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Clash Display";
-  src: url("/fonts/ClashDisplay-Bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Satoshi";
-  src: url("/fonts/Satoshi-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Satoshi";
-  src: url("/fonts/Satoshi-Medium.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Satoshi";
-  src: url("/fonts/Satoshi-Bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
 }
 
 /* ─── Base Styles ─── */
@@ -122,14 +79,13 @@
   body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    font-family: "DM Sans", sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     font-size: 16px;
     line-height: 1.7;
     overflow-x: hidden;
     position: relative;
   }
 
-  /* ─── Global Typography Rules ─── */
   h1, h2, h3, h4, h5, h6 {
     word-break: normal;
     overflow-wrap: normal;
@@ -137,18 +93,30 @@
   }
 }
 
+/* ─── Void Signal background layers (fixed, behind content) ─── */
 @layer base {
-  /* ─── Noise Texture Overlay ─── */
+  /* Film grain */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: 9999;
+    z-index: -1;
     pointer-events: none;
-    opacity: 0.04;
-    background-image: url("/images/noise.svg");
-    background-repeat: repeat;
-    background-size: 200px 200px;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* Radial accent wash + horizontal scanlines */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(120% 80% at 50% -10%, rgba(201, 250, 77, 0.1), transparent 55%),
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 46px;
   }
 
   /* ─── Selection ─── */
@@ -188,7 +156,7 @@
   /* ─── Focus Styles ─── */
   *:focus-visible {
     outline: 2px solid var(--accent);
-    outline-offset: 2px;
+    outline-offset: 3px;
   }
 }
 

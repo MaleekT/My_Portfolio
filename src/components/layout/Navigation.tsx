@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import ThemeToggle from "@/components/ui/ThemeToggle";
-import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -14,7 +12,6 @@ const navLinks = [
 ];
 
 export default function Navigation() {
-  const { theme, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -121,14 +118,10 @@ export default function Navigation() {
                 )}
               </motion.a>
             ))}
-            <div className="ml-4 border-l border-border pl-4">
-              <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
-            </div>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="flex items-center gap-4 md:hidden">
-            <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="relative z-50 flex h-8 w-8 flex-col items-center justify-center gap-1.5"
