@@ -24,7 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Maleek Taiwo — UI/UX Designer & Webflow Developer",
+  title: "Maleek Taiwo | UI/UX Designer & Webflow Developer",
   description:
     "I design and build websites that work as hard as you do. Clean interfaces, solid code, real results. UI/UX Designer and Webflow Developer based in Lagos, Nigeria.",
   keywords: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Maleek Taiwo" }],
   openGraph: {
-    title: "Maleek Taiwo — UI/UX Designer & Webflow Developer",
+    title: "Maleek Taiwo | UI/UX Designer & Webflow Developer",
     description:
       "I design and build websites that work as hard as you do. Clean interfaces, solid code, real results.",
     url: "https://maleektaiwo.com",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Maleek Taiwo — UI/UX Designer & Webflow Developer",
+    title: "Maleek Taiwo | UI/UX Designer & Webflow Developer",
     description:
       "I design and build websites that work as hard as you do. Clean interfaces, solid code, real results.",
     creator: "@_MasterMal",

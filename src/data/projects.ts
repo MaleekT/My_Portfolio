@@ -16,7 +16,7 @@ export const projects: Project[] = [
       role: "UI/UX Design, Webflow Development, Brand Design",
       tools: ["Figma", "Webflow", "WhatsApp Business API"],
       approach:
-        "I built a grid-focused layout to highlight fabric textures and vibrant colors. Using Webflow CMS, I organized the inventory into filterable categories—material, pattern, and occasion—and integrated high-res galleries to ensure a premium, tactile feel on screen.",
+        "I built a grid-focused layout to highlight fabric textures and vibrant colors. Using Webflow CMS, I organized the inventory into filterable categories (material, pattern, and occasion) and integrated high-res galleries to ensure a premium, tactile feel on screen.",
       results:
         "The site successfully expands the brand's reach beyond its physical location. By combining a clean, user-centric interface with fast performance, I delivered a responsive experience that makes browsing large collections effortless on any device.",
       metrics: [
@@ -39,10 +39,10 @@ export const projects: Project[] = [
     caseStudy: {
       brief:
         "The goal was to make saving feel automatic. Most people save by manually moving money around or keeping a spreadsheet. With Split, you set up buckets for things like savings, bills, or a specific goal, share one payment link, and every USDC payment that lands gets divided across those buckets the moment it arrives.",
-      role: "Product Design, Full-Stack Development, Smart Contract Integration",
+      role: "Concept, UI/UX & Product Design",
       tools: ["Figma", "Next.js", "TypeScript", "wagmi / viem", "RainbowKit", "Supabase", "Arc Testnet"],
       approach:
-        "I designed a dark, clean interface with a live bucket preview, so the way the split works is clear before you even connect a wallet. On the build side, I handled the wallet connection with RainbowKit and wagmi, kept bucket data in Supabase, and wired up the on-chain splitting on Arc so each payment routes to your buckets by percentage and settles in under a second.",
+        "I led the concept and the full UI and UX. A dark, clean interface with a live bucket preview, so the way a payment splits is obvious before you even connect a wallet. I made the product calls, the flows, the layout, and the visual system, then brought it to life with AI-assisted development on a Next.js and on-chain stack, so every incoming payment routes to your buckets by percentage and settles in under a second.",
       results:
         "The result is a savings tool that runs on its own. Money splits the moment it arrives, and there's a clean dashboard for managing your buckets, activity, and goals on both desktop and mobile.",
       metrics: [
@@ -65,10 +65,10 @@ export const projects: Project[] = [
     caseStudy: {
       brief:
         "The goal was to settle the small bets friends make and then never actually collect on. Two people pick a bet from a set of templates, both stake the same amount of USDC, and it locks. The tricky part was making it settle quickly and fairly without turning it into a prediction market, so the bet stays private between the two of you and resolves on its own.",
-      role: "Product Design, Full-Stack Development, Smart Contracts, AI Agent",
+      role: "Concept, UI/UX & Product Design",
       tools: ["Figma", "Next.js", "TypeScript", "Solidity", "wagmi / viem", "Supabase", "Arc Testnet"],
       approach:
-        "I designed a mobile-first dark interface built around the moment a bet settles, with a live card showing the stake, the source, and a countdown. An AI agent pulls the result from one public source, posts a proposed winner on-chain, and opens a 3-hour window to challenge it. If someone disputes it, the bet falls back to both people confirming. The key detail is that the agent can only ever pay one of the two people in the bet, and that rule lives in the contract itself, not on a server you have to trust.",
+        "I led the concept and the UI and UX. A mobile-first dark interface built around the single moment a bet settles, with a live card showing the stake, the source, and a countdown. I designed the full flow, then brought it to life with AI-assisted development. Under the hood, an AI agent pulls the result from one public source, posts a proposed winner on-chain, and opens a 3-hour window to challenge it. If anyone disputes, it falls back to both people confirming, and the contract can only ever pay one of the two people in the bet, never an arbitrary address.",
       results:
         "The payoff is watching the loser's stake land in the winner's wallet seconds after it settles. It works for the kind of private, one-on-one bet that prediction markets were never really built for, with no liquidity needed and very little trust required.",
       metrics: [
@@ -90,7 +90,7 @@ export const projects: Project[] = [
     liveUrl: "https://vantage-point-665ec9.webflow.io",
     caseStudy: {
       brief:
-        "The goal was to build a high-performance site for a cloud infrastructure firm targeting Series A–C startups. The design needed to bridge the gap between technical authority and elite-tier visual sophistication to stand out in a crowded SaaS market.",
+        "The goal was to build a high-performance site for a cloud infrastructure firm targeting Series A to C startups. The design needed to bridge the gap between technical authority and elite-tier visual sophistication to stand out in a crowded SaaS market.",
       role: "UI/UX Design, Webflow Development, Custom Animations",
       tools: ["Figma", "Webflow", "Custom CSS", "JavaScript", "GSAP Animations"],
       approach:
