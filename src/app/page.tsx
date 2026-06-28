@@ -7,6 +7,7 @@ import Hero from "@/components/sections/Hero";
 import SelectedWork from "@/components/sections/SelectedWork";
 import Skills from "@/components/sections/Skills";
 import Process from "@/components/sections/Process";
+import HowIThink from "@/components/sections/HowIThink";
 import Contact from "@/components/sections/Contact";
 import Chatbot from "@/components/ui/Chatbot";
 
@@ -23,6 +24,8 @@ export default function Home() {
         <Skills />
 
         <Process />
+
+        <HowIThink />
 
         <Contact />
 

@@ -1,16 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { Project } from "@/types";
-import Button from "./Button";
-
-const ease = [0.16, 1, 0.3, 1] as const;
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
 
 interface CaseStudyExpandedProps {
   project: Project;
@@ -21,188 +12,129 @@ export default function CaseStudyExpanded({
   project,
   onClose,
 }: CaseStudyExpandedProps) {
-  const { caseStudy, liveUrl } = project;
-  const [imageError, setImageError] = useState(false);
+  const [imgError, setImgError] = useState(false);
+  const { caseStudy, liveUrl, title } = project;
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={{
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: 0.1,
-            delayChildren: 0.3,
-          },
-        },
-      }}
-      className="relative py-8"
-    >
-      {/* Close button */}
-      <motion.button
-        variants={itemVariants}
-        transition={{ duration: 0.4, ease }}
-        onClick={onClose}
-        className="absolute right-0 top-8 z-10 flex h-12 w-12 items-center justify-center text-text-secondary transition-colors duration-300 hover:text-accent"
-        aria-label="Close case study"
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <line x1="18" y1="6" x2="6" y2="18" />
-          <line x1="6" y1="6" x2="18" y2="18" />
-        </svg>
-      </motion.button>
-
+    <div className="overflow-hidden pb-12 pt-2">
       {/* Hero image */}
-      <motion.div
-        variants={itemVariants}
-        transition={{ duration: 0.6, ease }}
-        className="mb-12 aspect-video w-full overflow-hidden border border-border bg-bg-secondary"
-      >
-        {imageError ? (
-          <div className="flex h-full w-full flex-col items-center justify-center gap-3 px-6 text-center">
-            <span className="font-display text-[clamp(20px,3vw,32px)] leading-tight tracking-[-0.02em] text-text-secondary">
-              {project.title}
+      <div className="relative mb-8 aspect-video w-full overflow-hidden rounded-[8px] border border-border-accent bg-bg-secondary">
+        {imgError ? (
+          <div className="flex h-full w-full flex-col items-center justify-center gap-2 px-6 text-center">
+            <span
+              className="font-display text-text-secondary"
+              style={{ fontSize: "clamp(20px, 3vw, 32px)" }}
+            >
+              {title}
             </span>
-            <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-text-muted">
-              Preview coming soon
+            <span className="font-mono text-[12px] uppercase tracking-[0.1em] text-text-dim">
+              Preview
             </span>
           </div>
         ) : (
           <img
             src={project.fullImageUrl}
-            alt={`${project.title} — Full Preview`}
+            alt={`${title} preview`}
             className="h-full w-full object-cover"
-            onError={() => setImageError(true)}
+            onError={() => setImgError(true)}
           />
         )}
-      </motion.div>
-
-      {/* Project overview — two columns */}
-      <div className="mb-12 grid gap-12 md:grid-cols-5">
-        {/* Left — The Brief */}
-        <motion.div
-          variants={itemVariants}
-          transition={{ duration: 0.5, ease }}
-          className="md:col-span-3"
-        >
-          <h4 className="mb-6 font-mono text-[13px] uppercase tracking-[0.08em] text-accent">
-            The Brief
-          </h4>
-          <p className="font-body text-[16px] leading-[1.7] text-text-secondary">
-            {caseStudy.brief}
-          </p>
-        </motion.div>
-
-        {/* Right — Quick info */}
-        <motion.div
-          variants={itemVariants}
-          transition={{ duration: 0.5, ease }}
-          className="space-y-8 md:col-span-2"
-        >
-          <div>
-            <h4 className="mb-3 font-mono text-[13px] uppercase tracking-[0.08em] text-accent">
-              Role
-            </h4>
-            <p className="font-body text-[15px] leading-[1.7] text-text-secondary">
-              {caseStudy.role}
-            </p>
-          </div>
-
-          <div>
-            <h4 className="mb-3 font-mono text-[13px] uppercase tracking-[0.08em] text-accent">
-              Tools
-            </h4>
-            <div className="flex flex-wrap gap-3">
-              {caseStudy.tools.map((tool) => (
-                <span
-                  key={tool}
-                  className="border border-border px-4 py-2 font-mono text-[13px] text-text-secondary"
-                >
-                  {tool}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {liveUrl && (
-            <div>
-              <h4 className="mb-3 font-mono text-[13px] uppercase tracking-[0.08em] text-accent">
-                Live Site
-              </h4>
-              <Button variant="secondary" href={liveUrl}>
-                Visit Site
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="7" y1="17" x2="17" y2="7" />
-                  <polyline points="7 7 17 7 17 17" />
-                </svg>
-              </Button>
-            </div>
-          )}
-        </motion.div>
       </div>
 
-      {/* Approach */}
-      <motion.div
-        variants={itemVariants}
-        transition={{ duration: 0.5, ease }}
-        className="mb-12"
-      >
-        <h4 className="mb-6 font-mono text-[13px] uppercase tracking-[0.08em] text-accent">
-          The Approach
-        </h4>
-        <p className="max-w-3xl font-body text-[16px] leading-[1.7] text-text-secondary">
+      {/* Role / Tools / Live site */}
+      <div className="mb-8 grid gap-6 border-b border-border pb-8 md:grid-cols-3">
+        <div>
+          <div className="mb-3 font-mono text-[12px] uppercase tracking-[0.2em] text-accent">
+            // Role
+          </div>
+          <p className="m-0 font-body text-[15px] leading-[1.55] text-text-secondary">
+            {caseStudy.role}
+          </p>
+        </div>
+        <div>
+          <div className="mb-3 font-mono text-[12px] uppercase tracking-[0.2em] text-accent">
+            // Built with
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {caseStudy.tools.map((tool) => (
+              <span
+                key={tool}
+                className="rounded-[2px] border border-border px-2.5 py-1.5 font-mono text-[12px] text-text-secondary"
+              >
+                {tool}
+              </span>
+            ))}
+          </div>
+        </div>
+        {liveUrl && (
+          <div>
+            <div className="mb-3 font-mono text-[12px] uppercase tracking-[0.2em] text-accent">
+              // Live Site
+            </div>
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-[2px] border border-border px-4 py-2 font-mono text-[13px] text-text-primary transition-colors duration-300 hover:border-accent hover:text-accent"
+            >
+              Visit Site ↗
+            </a>
+          </div>
+        )}
+      </div>
+
+      {/* The Brief */}
+      <div className="mb-10 grid gap-3 md:grid-cols-[200px_1fr]">
+        <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-accent">
+          // The Brief
+        </div>
+        <p
+          className="m-0 max-w-[740px] font-body font-medium text-text-primary"
+          style={{ fontSize: "clamp(18px, 2vw, 24px)", lineHeight: 1.5 }}
+        >
+          {caseStudy.brief}
+        </p>
+      </div>
+
+      {/* The Approach */}
+      <div className="mb-10 grid gap-3 md:grid-cols-[200px_1fr]">
+        <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-accent">
+          // The Approach
+        </div>
+        <p className="m-0 max-w-[740px] font-body text-[16px] leading-[1.7] text-text-secondary">
           {caseStudy.approach}
         </p>
-      </motion.div>
+      </div>
 
-      {/* Results */}
-      <motion.div
-        variants={itemVariants}
-        transition={{ duration: 0.5, ease }}
-        className="mb-12"
-      >
-        <h4 className="mb-6 font-mono text-[13px] uppercase tracking-[0.08em] text-accent">
-          The Results
-        </h4>
-        <p className="max-w-3xl font-body text-[16px] leading-[1.7] text-text-secondary">
+      {/* The Results */}
+      <div className="mb-8 grid gap-3 md:grid-cols-[200px_1fr]">
+        <div className="font-mono text-[12px] uppercase tracking-[0.2em] text-accent">
+          // The Results
+        </div>
+        <p className="m-0 max-w-[740px] font-body text-[16px] leading-[1.7] text-text-secondary">
           {caseStudy.results}
         </p>
-      </motion.div>
+      </div>
 
       {/* Metrics */}
-      <motion.div
-        variants={itemVariants}
-        transition={{ duration: 0.5, ease }}
-        className="flex flex-wrap gap-4"
-      >
+      <div className="flex flex-wrap items-center gap-3">
         {caseStudy.metrics.map((metric) => (
           <span
             key={metric}
-            className="border border-accent/30 bg-accent-subtle px-5 py-2.5 font-mono text-[13px] uppercase tracking-[0.08em] text-accent"
+            className="rounded-[2px] border border-border-accent bg-accent-subtle px-3.5 py-2 font-mono text-[12px] uppercase tracking-[0.06em] text-accent"
           >
             {metric}
           </span>
         ))}
-      </motion.div>
-    </motion.div>
+      </div>
+
+      <button
+        type="button"
+        onClick={onClose}
+        className="mt-8 font-mono text-[12px] uppercase tracking-[0.12em] text-text-dim transition-colors duration-300 hover:text-accent"
+      >
+        ✕ Close case study
+      </button>
+    </div>
   );
 }

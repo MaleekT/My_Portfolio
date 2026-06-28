@@ -168,6 +168,28 @@
   }
 }
 
+/* ─── Void Signal Keyframes ─── */
+@keyframes vs-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes vs-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.vs-marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: vs-marquee 26s linear infinite;
+  will-change: transform;
+}
+
+.vs-float {
+  animation: vs-float 6s ease-in-out infinite;
+}
+
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
   *,
