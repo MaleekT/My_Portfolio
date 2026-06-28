@@ -38,6 +38,7 @@ export default function SelectedWork() {
               <button
                 type="button"
                 data-work
+                data-thumb={project.thumbnailUrl}
                 data-reveal
                 onClick={() => setOpenId(isOpen ? null : project.id)}
                 aria-expanded={isOpen}

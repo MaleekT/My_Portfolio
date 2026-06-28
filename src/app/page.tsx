@@ -10,6 +10,7 @@ import Process from "@/components/sections/Process";
 import HowIThink from "@/components/sections/HowIThink";
 import Contact from "@/components/sections/Contact";
 import Chatbot from "@/components/ui/Chatbot";
+import MotionLayer from "@/components/ui/MotionLayer";
 
 export default function Home() {
   return (
@@ -33,6 +34,7 @@ export default function Home() {
       </SmoothScroll>
 
       <Chatbot />
+      <MotionLayer />
     </>
   );
 }
