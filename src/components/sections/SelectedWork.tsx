@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import { projects } from "@/data/projects";
 import CaseStudyExpanded from "@/components/ui/CaseStudyExpanded";
 
 export default function SelectedWork() {
-  const [openId, setOpenId] = useState<string | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section
@@ -31,7 +32,6 @@ export default function SelectedWork() {
 
       <div>
         {projects.map((project, i) => {
-          const isOpen = openId === project.id;
           const num = String(i + 1).padStart(2, "0");
           return (
             <div key={project.id} className="border-b border-border">
@@ -40,8 +40,8 @@ export default function SelectedWork() {
                 data-work
                 data-thumb={project.thumbnailUrl}
                 data-reveal
-                onClick={() => setOpenId(isOpen ? null : project.id)}
-                aria-expanded={isOpen}
+                aria-haspopup="dialog"
+                onClick={() => setOpenIndex(i)}
                 className="group grid w-full grid-cols-[44px_1fr_auto] items-center gap-4 rounded-[3px] px-1.5 py-6 text-left transition-all duration-300 hover:bg-accent hover:px-5 sm:grid-cols-[60px_1fr_auto] sm:gap-[18px]"
               >
                 <span className="font-mono text-[14px] text-accent transition-colors group-hover:text-bg-primary">
@@ -59,21 +59,24 @@ export default function SelectedWork() {
                     aria-hidden="true"
                     className="font-display text-[22px] text-bg-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                   >
-                    {isOpen ? "−" : "↗"}
+                    ↗
                   </span>
                 </span>
               </button>
-
-              {isOpen && (
-                <CaseStudyExpanded
-                  project={project}
-                  onClose={() => setOpenId(null)}
-                />
-              )}
             </div>
           );
         })}
       </div>
+
+      <AnimatePresence>
+        {openIndex !== null && (
+          <CaseStudyExpanded
+            project={projects[openIndex]}
+            index={openIndex}
+            onClose={() => setOpenIndex(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
