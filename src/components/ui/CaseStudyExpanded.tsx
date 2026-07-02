@@ -85,6 +85,12 @@ export default function CaseStudyExpanded({
                 alt={`${title} preview`}
                 onError={() => setImgError(true)}
                 className="absolute inset-0 h-full w-full object-cover opacity-90"
+                style={{
+                  /* The hero files are laptop mockups with margins baked in;
+                     zoom past them so the device fills the panel width. */
+                  transform: "scale(1.6)",
+                  transformOrigin: "50% 44%",
+                }}
               />
             )}
             <div

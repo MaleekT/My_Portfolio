@@ -1,12 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence } from "framer-motion";
 import { projects } from "@/data/projects";
 import CaseStudyExpanded from "@/components/ui/CaseStudyExpanded";
 
 export default function SelectedWork() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   return (
     <section
@@ -68,15 +72,21 @@ export default function SelectedWork() {
         })}
       </div>
 
-      <AnimatePresence>
-        {openIndex !== null && (
-          <CaseStudyExpanded
-            project={projects[openIndex]}
-            index={openIndex}
-            onClose={() => setOpenIndex(null)}
-          />
+      {/* Portal to body so the overlay escapes the section's z-5 stacking
+          context and sits above the nav, progress bar, and chatbot. */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {openIndex !== null && (
+              <CaseStudyExpanded
+                project={projects[openIndex]}
+                index={openIndex}
+                onClose={() => setOpenIndex(null)}
+              />
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </section>
   );
 }
