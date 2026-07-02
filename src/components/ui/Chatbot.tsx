@@ -18,22 +18,22 @@ const responses: { keywords: string[]; reply: string }[] = [
   {
     keywords: ["who", "about", "maleek", "yourself"],
     reply:
-      "Maleek Taiwo is a UI/UX Designer & Webflow Developer based in Lagos, Nigeria. He designs and builds functional websites that solve real user problems — with clean interfaces and solid code.",
+      "Maleek Taiwo is a UI/UX Designer & Webflow Developer based in Lagos, Nigeria. He designs and builds functional websites that solve real user problems, with clean interfaces and solid code.",
   },
   {
     keywords: ["skill", "tools", "tech", "stack", "expertise"],
     reply:
-      "Maleek works with Figma for design, Webflow (Client-First framework) for development, and also builds with React, Next.js, TypeScript, and Tailwind CSS. He's proficient in HTML/CSS, JavaScript, and various integrations like Zapier and Memberstack.",
+      "Maleek designs in Figma and builds with Webflow on the Client-First framework. He works with HTML/CSS, JavaScript, and integrations like Zapier, Memberstack, and Airtable. He also ships his own products, like Split and Pop, using AI-assisted development.",
   },
   {
     keywords: ["webflow"],
     reply:
-      "Webflow is Maleek's primary development platform. He uses the Client-First framework for clean, scalable architecture — with Finsweet attributes, CMS architecture, custom animations, and ecommerce capabilities.",
+      "Webflow is Maleek's primary development platform. He uses the Client-First framework for clean, scalable architecture, with Finsweet attributes, CMS architecture, custom animations, and ecommerce capabilities.",
   },
   {
     keywords: ["project", "work", "portfolio", "built", "made"],
     reply:
-      "Maleek has worked on projects like Vantage Point (SaaS/Infrastructure), Hayes Valley Interior Design, Melons Site (Fintech), and God's Time Textile Stores (E-commerce). Scroll up to the 'Selected Work' section to see case studies!",
+      "Maleek's featured work includes God's Time Textile Stores (e-commerce), Split (a DeFi savings app), Pop (a 1v1 betting app), Vantage Point (SaaS), Hayes Valley Interior Design, and Melons Site (fintech). Click any row in the Selected Work section to open the full case study.",
   },
   {
     keywords: ["price", "cost", "rate", "charge", "budget", "pricing"],
@@ -43,7 +43,7 @@ const responses: { keywords: string[]; reply: string }[] = [
   {
     keywords: ["hire", "available", "freelance", "work together", "open"],
     reply:
-      "Yes! Maleek is currently available for freelance projects and full-time opportunities. He's taking on new projects for Q2 2026. Typical turnaround is 2–4 weeks depending on scope.",
+      "Yes! Maleek is currently taking on new projects, both freelance and full-time opportunities. Typical turnaround is 2 to 4 weeks depending on scope.",
   },
   {
     keywords: ["contact", "reach", "email", "touch", "connect"],
@@ -53,7 +53,7 @@ const responses: { keywords: string[]; reply: string }[] = [
   {
     keywords: ["process", "how", "workflow", "approach"],
     reply:
-      "Maleek follows a 4-step process: 1) Discovery & Strategy — understanding your goals, 2) UI/UX Design in Figma, 3) Webflow Development using Client-First, and 4) Custom Code & Launch with rigorous QA.",
+      "Maleek follows a 4-step process: 1) Discovery & Strategy to understand your goals, 2) UI/UX Design in Figma, 3) Webflow Development using Client-First, and 4) Custom Code & Launch with rigorous QA.",
   },
   {
     keywords: ["location", "where", "based", "lagos", "nigeria", "remote"],
@@ -63,12 +63,12 @@ const responses: { keywords: string[]; reply: string }[] = [
   {
     keywords: ["timeline", "how long", "turnaround", "deadline", "fast"],
     reply:
-      "Typical project turnaround is 2–4 weeks depending on scope. Maleek prioritizes quality over speed, but can work within tight deadlines when needed.",
+      "Typical project turnaround is 2 to 4 weeks depending on scope. Maleek prioritizes quality over speed, but can work within tight deadlines when needed.",
   },
   {
     keywords: ["design", "figma", "ui", "ux"],
     reply:
-      "Maleek designs high-fidelity interfaces in Figma with obsessive attention to typography, spacing, and hierarchy. Every layout decision is intentional — no templates, no generic patterns.",
+      "Maleek designs high-fidelity interfaces in Figma with obsessive attention to typography, spacing, and hierarchy. Every layout decision is intentional. No templates, no generic patterns.",
   },
 ];
 
@@ -102,6 +102,7 @@ export default function Chatbot() {
     },
   ]);
   const [input, setInput] = useState("");
+  const idRef = useRef(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -116,13 +117,13 @@ export default function Chatbot() {
   const sendMessage = (text: string) => {
     if (!text.trim()) return;
 
-    const userMsg: Message = { id: Date.now(), text: text.trim(), sender: "user" };
+    const userMsg: Message = { id: ++idRef.current, text: text.trim(), sender: "user" };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
 
     setTimeout(() => {
       const botMsg: Message = {
-        id: Date.now() + 1,
+        id: ++idRef.current,
         text: getReply(text),
         sender: "bot",
       };
@@ -139,10 +140,11 @@ export default function Chatbot() {
     <>
       {/* Toggle button */}
       <motion.button
+        type="button"
         onClick={() => setOpen(!open)}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-accent shadow-lg transition-colors duration-300 hover:bg-accent-hover"
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-accent shadow-[0_10px_30px_rgba(201,250,77,0.25)] transition-colors duration-300 hover:bg-accent-hover"
         aria-label={open ? "Close chat" : "Open chat"}
       >
         <AnimatePresence mode="wait">
@@ -157,7 +159,7 @@ export default function Chatbot() {
               height="20"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#0A0A0A"
+              stroke="#08090a"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -176,7 +178,7 @@ export default function Chatbot() {
               height="22"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#0A0A0A"
+              stroke="#08090a"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -195,25 +197,25 @@ export default function Chatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-24 right-6 z-50 flex h-[480px] w-[360px] flex-col overflow-hidden border border-border bg-bg-primary shadow-2xl sm:w-[380px]"
+            className="fixed bottom-24 right-6 z-50 flex h-[480px] w-[360px] flex-col overflow-hidden rounded-[8px] border border-border bg-bg-primary shadow-[0_24px_60px_rgba(0,0,0,0.6)] sm:w-[380px]"
           >
             {/* Header */}
             <div className="flex items-center gap-3 border-b border-border px-5 py-4">
-              <div className="flex h-9 w-9 items-center justify-center bg-accent">
-                <span className="font-mono text-[11px] font-bold text-[#0A0A0A]">MT</span>
+              <div className="flex h-9 w-9 items-center justify-center rounded-[2px] bg-accent">
+                <span className="font-mono text-[11px] font-bold text-bg-primary">MT</span>
               </div>
               <div>
                 <p className="font-body text-[14px] font-medium text-text-primary">
                   Maleek&apos;s Assistant
                 </p>
                 <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-accent">
-                  Online
+                  // Ask me anything
                 </p>
               </div>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-5 py-4">
+            <div data-lenis-prevent className="flex-1 overflow-y-auto px-5 py-4">
               <div className="flex flex-col gap-3">
                 {messages.map((msg) => (
                   <motion.div
@@ -226,9 +228,9 @@ export default function Chatbot() {
                     }`}
                   >
                     <div
-                      className={`px-4 py-3 font-body text-[13px] leading-[1.6] ${
+                      className={`rounded-[3px] px-4 py-3 font-body text-[13px] leading-[1.6] ${
                         msg.sender === "user"
-                          ? "bg-accent text-[#0A0A0A]"
+                          ? "bg-accent text-bg-primary"
                           : "border border-border bg-bg-elevated text-text-secondary"
                       }`}
                     >
@@ -239,14 +241,15 @@ export default function Chatbot() {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Suggested questions — show only when just the intro message */}
+              {/* Suggested questions, shown only alongside the intro message */}
               {messages.length === 1 && (
                 <div className="mt-4 flex flex-wrap gap-2">
                   {suggestedQuestions.map((q) => (
                     <button
+                      type="button"
                       key={q}
                       onClick={() => sendMessage(q)}
-                      className="border border-border px-3 py-1.5 font-mono text-[11px] text-text-muted transition-colors duration-200 hover:border-accent hover:text-accent"
+                      className="rounded-[2px] border border-border px-3 py-1.5 font-mono text-[11px] text-text-muted transition-colors duration-200 hover:border-accent hover:text-accent"
                     >
                       {q}
                     </button>
@@ -266,7 +269,7 @@ export default function Chatbot() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask something..."
-                className="flex-1 bg-transparent font-body text-[13px] text-text-primary outline-none placeholder:text-text-muted/50"
+                className="flex-1 bg-transparent font-body text-[13px] text-text-primary outline-none placeholder:text-placeholder"
               />
               <button
                 type="submit"
