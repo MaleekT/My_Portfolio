@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 const contactLinks = [
   {
@@ -25,18 +26,68 @@ const contactLinks = [
   },
 ];
 
+// Public by design: Web3Forms access keys are meant for client-side code.
+const WEB3FORMS_ACCESS_KEY = "6bd99d5c-3e86-412c-8373-81d959edc7e1";
+// Web3Forms' shared hCaptcha sitekey; the response is verified on their server.
+const HCAPTCHA_SITEKEY = "50b2fe65-b00b-4b9e-ad62-3ba471098be2";
+
 const inputClass =
   "w-full rounded-[3px] border border-border bg-bg-primary p-3 text-[14px] text-text-primary placeholder:text-placeholder focus:border-accent focus:outline-none";
 
-export default function Contact() {
-  // Placeholder submit. Real Web3Forms + Turnstile handler is wired in Phase 6.
-  const [sent, setSent] = useState(false);
+type Status = "idle" | "sending" | "success" | "error";
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+export default function Contact() {
+  const [status, setStatus] = useState<Status>("idle");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
+  const captchaRef = useRef<HCaptcha>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => setSent(false), 2600);
+    if (status === "sending") return;
+    if (!captchaToken) {
+      setStatus("error");
+      return;
+    }
+    setStatus("sending");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `Portfolio contact from ${name.replace(/[\r\n]+/g, " ").trim()}`,
+          name,
+          email,
+          message,
+          "h-captcha-response": captchaToken,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus("success");
+        setName("");
+        setEmail("");
+        setMessage("");
+        setCaptchaToken("");
+        captchaRef.current?.resetCaptcha();
+        window.setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
+
+  const buttonLabel =
+    status === "sending"
+      ? "Sending..."
+      : status === "success"
+        ? "✓ Sent. Thanks!"
+        : "Send Message";
 
   return (
     <section
@@ -91,6 +142,16 @@ export default function Contact() {
           data-reveal
           className="rounded-[8px] border border-border bg-bg-secondary p-7"
         >
+          {/* Honeypot: hidden from humans; bots that fill it get dropped by Web3Forms */}
+          <input
+            type="checkbox"
+            name="botcheck"
+            tabIndex={-1}
+            autoComplete="off"
+            className="hidden"
+            aria-hidden="true"
+          />
+
           <label
             htmlFor="contact-name"
             className="mb-1.5 block font-mono text-[11px] uppercase tracking-[0.14em] text-text-dim"
@@ -101,6 +162,10 @@ export default function Contact() {
             id="contact-name"
             type="text"
             required
+            minLength={2}
+            maxLength={100}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             placeholder="Your name"
             className={`mb-4 ${inputClass}`}
           />
@@ -114,6 +179,9 @@ export default function Contact() {
             id="contact-email"
             type="email"
             required
+            maxLength={200}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="you@email.com"
             className={`mb-4 ${inputClass}`}
           />
@@ -127,16 +195,52 @@ export default function Contact() {
             id="contact-message"
             rows={4}
             required
+            minLength={10}
+            maxLength={5000}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
             placeholder="Tell me about the project"
             className={`mb-5 resize-y ${inputClass}`}
           />
+
+          <div className="mb-5">
+            <HCaptcha
+              ref={captchaRef}
+              sitekey={HCAPTCHA_SITEKEY}
+              theme="dark"
+              reCaptchaCompat={false}
+              onVerify={(token) => {
+                setCaptchaToken(token);
+                if (status === "error") setStatus("idle");
+              }}
+              onExpire={() => setCaptchaToken("")}
+            />
+          </div>
+
           <button
             type="submit"
             data-magnet
-            className="w-full rounded-[3px] bg-accent p-4 font-display text-[15px] font-bold text-bg-primary transition-colors hover:bg-accent-hover"
+            disabled={status === "sending"}
+            className="w-full rounded-[3px] bg-accent p-4 font-display text-[15px] font-bold text-bg-primary transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70"
           >
-            {sent ? "✓ Sent. Thanks!" : "Send Message"}
+            {buttonLabel}
           </button>
+
+          <div aria-live="polite">
+            {status === "error" && (
+              <p className="mb-0 mt-3 font-mono text-[12px] text-red-400">
+                {captchaToken
+                  ? "Something went wrong sending your message. Please try again, or email me directly."
+                  : "Please complete the captcha first."}
+              </p>
+            )}
+            {status === "success" && (
+              <p className="mb-0 mt-3 font-mono text-[12px] text-accent">
+                Your message is in my inbox. I&apos;ll get back to you within 24
+                hours.
+              </p>
+            )}
+          </div>
         </form>
       </div>
     </section>
